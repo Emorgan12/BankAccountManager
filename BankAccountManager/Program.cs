@@ -1,4 +1,7 @@
-﻿namespace BankAccountManager
+﻿using System;
+using System.Diagnostics.SymbolStore;
+
+namespace BankAccountManager
 {
     internal class Program
     {
@@ -12,7 +15,7 @@
                 string input = Console.ReadLine();
                 if (input == "1")
                 {
-                    string[] newAccount = CreateAccount();
+                    string[] newAccount = CreateAccount(allAccounts);
                     allAccounts.Add(newAccount);
                 }
                 else if (input == "2")
@@ -30,37 +33,66 @@
             }
             Console.ReadKey();
         }
-        static string[] CreateAccount()
+        static string[] CreateAccount(List<string[]>accountList)
         {
-            Console.WriteLine("Enter your name: ");
-            string name = Console.ReadLine();
-            Console.WriteLine("Create a password: ");
-            string password = Console.ReadLine();
-            string[] account = new string[] { name, password };
-            return account;
+            bool found = false;
+           
+                Console.WriteLine("Enter a username: ");
+                string username = Console.ReadLine();
+                static string CheckUser(List<string[]> accountList,string name)
+                {
+
+                bool found = false;
+                foreach (string[] account in accountList)
+                    {
+                        if (account[0] == name)
+                        {
+                            found = true;
+                            Console.WriteLine("Username already exists");
+                            return null;
+                        }
+                        else
+                        {
+                            return name;
+                        }
+
+                    }
+                
+            }
+            string name = CheckUser(accountList, username);
+            if (name != null)
+            {
+                Console.WriteLine("Create a password: ");
+                string password = Console.ReadLine();
+                string[] newAccount = new string[] { name, password };
+                return newAccount;
+            }
+            else
+                return null;
+            
         }
 
         static void signIn(List<string[]> accountList)
         {
             bool found = false;
-            Console.WriteLine("Enter name: ");
+            Console.WriteLine("Enter username: ");
             string name = Console.ReadLine();
-            Console.WriteLine("Enter password: ");
-            string password = Console.ReadLine();
             foreach (string[] account in accountList)
             {
                 if (account[0] == name)
                 {
                     found = true;
-                    Console.WriteLine("Account found... checking password");
+                    Console.WriteLine("Account found, enter your password: ");
+                    string password = Console.ReadLine();
                     if (account[1] == password)
                         Console.WriteLine("Sign-in successful");
                     else
                         Console.WriteLine("Incorrect Password");
                 }
-                if (!found)
-                    Console.WriteLine("Account does not exist");
+               
             }
+            if (!found)
+                Console.WriteLine("Account does not exist");
         }
     }
 }
