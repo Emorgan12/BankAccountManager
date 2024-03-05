@@ -15,17 +15,17 @@ namespace BankAccountManager
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("Create account [1], sign-in [2], or exit [3]");
+                Console.WriteLine("Create account [0], sign-in [1], or exit [2]");
                 string input = Console.ReadLine();
-                if (input == "1")
+                if (input == "0")
                 {
                     List<string> newAccount = CreateNewAccount(allAccounts);
                     Account account = new Account { username = newAccount[0], password = newAccount[1], balance = 0 };
                     allAccounts.Add(account);
                 }
-                else if (input == "2")
+                else if (input == "1")
                     signIn(allAccounts);
-                else if (input == "3")
+                else if (input == "2")
                     exit = true;
                 else
                     Console.WriteLine("Invalid input");
