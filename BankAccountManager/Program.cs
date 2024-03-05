@@ -38,32 +38,57 @@ namespace BankAccountManager
 static List<string> CreateNewAccount(List<Account> accountList)
         {
             bool notFound = true;
+            bool passwordLength1 = false;
+            bool passwordLength2 = false;
                 while (notFound)
                 {
                     Console.WriteLine("Enter a username: ");
                     string username = Console.ReadLine();
                     if (accountList.Count == 0)
                     {
-                    notFound = false;
-                    Console.WriteLine("Create a password: ");
-                    string password = Console.ReadLine();
-                    List<string> newAccount = new List<string> { username, password };
-                    return newAccount;
+                        notFound = false;
+                        while (!passwordLength1)
+                        {
+                            Console.WriteLine("Create a password: ");
+                            string password = Console.ReadLine();
+                            if (password.Length < 8)
+                            {
+                                Console.WriteLine("Password must be at least 8 characters");
+                            }
+                            else
+                            {
+                                List<string> newAccount = new List<string> { username, password };
+                                passwordLength1 = true;
+                                return newAccount;
+                            }
+                        }
                     }
                     foreach (Account account in accountList)
                     {
                         if (account.username==username)
                         {
                             Console.WriteLine("Username already exists");
+                            notFound = false;
                         }
                         else
                         {
-                            notFound = false;
-                            Console.WriteLine("Create a password: ");
-                            string password = Console.ReadLine();
-                            List<string> newAccount = new List<string> { username, password };
-                            return newAccount;
+                            while (!passwordLength2)
+                            {
+                                Console.WriteLine("Create a password: ");
+                                string password = Console.ReadLine();
+                                if (password.Length < 8)
+                                {
+                                    Console.WriteLine("Password must be at least 8 characters");
+                                }
+                                else
+                                {
+                                    List<string> newAccount = new List<string> { username, password };
+                                    passwordLength1 = true;
+                                    return newAccount;
+                                }
+                            }
                         }
+
                     }
                 }
             return null; 
