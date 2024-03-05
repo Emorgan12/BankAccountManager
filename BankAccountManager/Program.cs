@@ -118,6 +118,8 @@ static List<string> CreateNewAccount(List<Account> accountList)
                             string input = Console.ReadLine();
                             if (input == "0")
                             {
+                                dIntInput = false;
+
                                 while (!dIntInput)
                                 {
                                     Console.WriteLine("How much money to withdraw");
